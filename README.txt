@@ -105,8 +105,9 @@ Installation
 
 Grip Attendance currently supports [Python 3.x](https://www.python.org/downloads/).
 
-For the time being, it's best to simply grab the file and place it in a 
-directory that's on your search path. We're working on a pip install.
+For the time being, it's best to simply grab the 'grip-attendance.py' file and
+place it in a directory that's on your search path. We're working on a pip
+install.
 
 Support
 ----------------------
