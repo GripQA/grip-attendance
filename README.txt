@@ -104,18 +104,9 @@ Installation
 ----------------------
 
 Grip Attendance currently supports [Python 3.x](https://www.python.org/downloads/).
-It can be installed using [pip](https://pip.pypa.io/en/latest/).
 
-    pip install grip-attendance
-
-This will install the `grip-attendance` executable on your path.
-
-If you don't have pip, you can install it manually by cloning the code and
-running the install script:
-
-    git clone git@github.com:GripQA/grip-attendance.git
-    cd grip-attendance
-    python setup.py install
+For the time being, it's best to simply grab the file and place it in a 
+directory that's on your search path. We're working on a pip install.
 
 Support
 ----------------------
