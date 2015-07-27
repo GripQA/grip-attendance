@@ -1,0 +1,13 @@
+#!/bin/bash
+#
+# Script to prepare package for release
+#
+unix2dos -n README.md README.txt
+printf "%s\n" '1,$s/please submit an/please submit an issue at/g' w q | ed README.txt
+printf "%s\n" '1,$s/\[issue\](..\/..\/issues)/https:\/\/github.com\/GripQA\/grip-attendance\/issues/g' w q | ed README.txt
+cp -v README.txt README.rst
+printf "%s\n" '1,$s/^*/-/g' w q | ed README.rst
+echo -e "\nCheck changes in README.txt\n"
+tail -30 README.txt
+echo "\nCOMPARE README.txt to README.rst\n"
+diff -s README.txt README.rst
