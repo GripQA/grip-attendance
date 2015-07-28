@@ -1,0 +1,14 @@
+#!/bin/bash
+#
+# Script to set the version string to $1, should only be called by the prep-rls
+# script, so limted documentation
+
+sed -ir "s/VSTR = \"[0-9.]*/VSTR = \"$1/g" setup.py
+head -10 setup.py
+echo -e "Continue with Version as above?\n   '1' for Yes, '2' for No"
+select yn in "Yes" "No"; do
+   case $yn in
+      Yes ) echo "Continuing...with version $1"; break;;
+      No ) echo "Aborting execution..."; exit 1;;
+   esac
+done

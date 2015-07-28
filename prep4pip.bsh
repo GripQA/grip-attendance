@@ -2,12 +2,128 @@
 #
 # Script to prepare package for release
 #
-unix2dos -n README.md README.txt
-printf "%s\n" '1,$s/please submit an/please submit an issue at/g' w q | ed README.txt
-printf "%s\n" '1,$s/\[issue\](..\/..\/issues)/https:\/\/github.com\/GripQA\/grip-attendance\/issues/g' w q | ed README.txt
-cp -v README.txt README.rst
-printf "%s\n" '1,$s/^*/-/g' w q | ed README.rst
-echo -e "\nCheck changes in README.txt\n"
-tail -30 README.txt
-echo "\nCOMPARE README.txt to README.rst\n"
-diff -s README.txt README.rst
+
+# Upload to test or prodution for PyPI, comment/uncomment to specify correct
+# destination
+#PYPIDR="pypi"
+PYPIDR="pypitest"
+echo -e "\nNOTE:\n     Targeting: $PYPIDR"
+echo -e "Continue with PyPI this destination?\n   '1' for Yes, '2' for No"
+select yn in "Yes" "No"; do
+   case $yn in
+      Yes ) echo "Continuing...with $PYPIDR"; break;;
+      No ) echo "Aborting execution..."; exit 1;;
+   esac
+done
+
+# Will we set the version?
+RC=0
+if [[ "$#" -eq 1 ]]; then
+    echo "Version String will be: $1"
+    echo "Correct version string: $1?"
+    echo "    '1' for Yes, '2' for No, '3' to Skip"
+    select yns in "Yes" "No" "Skip"; do
+	case $yns in
+            Yes ) set-vers.bsh $1; RC=$?; break;;
+            No ) echo "Aborting execution..."; exit 1;;
+	    Skip ) echo "Skipping version string update..."; break;;
+	esac
+    done
+else
+    echo "USAGE: prep-rls.bsh version_string"
+    exit
+fi
+
+if [[ $RC != 0 ]]; then
+    echo "set-vers returned a bad status status: $RC"
+    exit $RC
+else
+    echo "set-vers completed successfully"
+fi
+
+# See whether we need to process the README files
+git status
+echo -e "Process README files?\n   '1' for Yes, '2' for Skip, '3' to Abort"
+select ysa in "Yes" "Skip" "Abort"; do
+    case $ysa in
+	Yes ) proc-readme.bsh; break;;
+	Skip ) echo "Skipping readme processing"; break;;
+	Abort ) echo "Aborting execution..."; exit 1;;
+    esac
+done
+
+echo -e "\nDo the changes to README.rst look OK?\n   '1' for Yes, '2' for No"
+select yn in "Yes" "No"; do
+   case $yn in
+      Yes ) echo "Continuing... git add/commit/push"; break;;
+      No ) echo "Aborting execution..."; exit 1;;
+   esac
+done
+echo -e "\n\n\n------------------------\n"
+git status
+git add -u --dry-run
+git branch
+echo -e "\n\n******* WARNING: ******************************************\n"
+echo "Usually, you should have all of your primary changes already committed"
+echo "before you run prep-rls. If there are changes, other than the ones"
+echo "made by this script, you probably should abort, commit the changes,"
+echo "and start this process again"
+echo -e "**************************************************************\n\n"
+echo -e "\n******* SECOND WARNING: ************************************\n"
+echo "ASSUMES YOUR CURRENT BRANCH IS MASTER, you should make sure that"
+echo "it is..."
+echo -e "**************************************************************\n\n"
+echo -e "Continue: to add updated files?\n   '1' for Yes, '2' for No"
+select yn in "Yes" "No"; do
+   case $yn in
+      Yes ) echo "Continuing... add updated files"; break;;
+      No ) echo "Aborting execution..."; exit 1;;
+   esac
+done
+git add -u
+
+echo -e "\nContinue: to commit changes?\n   '1' for Yes, '2' for No"
+select yn in "Yes" "No"; do
+   case $yn in
+      Yes ) echo "Continuing... commit changes"; break;;
+      No ) echo "Aborting execution..."; exit 1;;
+   esac
+done
+git commit -m "Prep for updating PyPI"
+
+echo -e "\nContinue: to push to master?\n   '1' for Yes, '2' for No"
+select yn in "Yes" "No"; do
+   case $yn in
+      Yes ) echo "Continuing... push changes to master"; break;;
+      No ) echo "Aborting execution..."; exit 1;;
+   esac
+done
+git push origin master
+
+echo -e "\nContinue: to tag current repo state?\n   '1' for Yes, '2' for No"
+select yn in "Yes" "No"; do
+   case $yn in
+      Yes ) echo "Continuing... tag repo state"; break;;
+      No ) echo "Aborting execution..."; exit 1;;
+   esac
+done
+git tag $1 -m "Tag for PyPI"
+
+echo -e "\nContinue: to push tag to origin?\n   '1' for Yes, '2' for No"
+select yn in "Yes" "No"; do
+   case $yn in
+      Yes ) echo "Continuing... push tag to origin"; break;;
+      No ) echo "Aborting execution..."; exit 1;;
+   esac
+done
+git push origin $1
+
+
+echo -e "\nContinue: to upload to pip?\n   '1' for Yes, '2' for No"
+select yn in "Yes" "No"; do
+   case $yn in
+      Yes ) echo "Continuing... Upload to pip"; break;;
+      No ) echo "Aborting execution..."; exit 1;;
+   esac
+done
+python3 setup.py sdist upload -r $PYPIDR
