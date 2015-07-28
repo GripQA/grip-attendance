@@ -98,7 +98,9 @@ section's corresponding data file
 blanks in field names (I don't know why some systems generate field
 names with trailing blanks, but they do). Spaces between words are fine,
 so values with intra-word blank spaces do not require quotes. If you use
-quotes, the quotes get included in the value string. If you absolutely
+quotes, the quotes get included in the value string.
+
+If you absolutely
 have to use quotes, for the trailing blanks, make use of the following
 directives in the config file (if you're using single quotes'). These allow
 the program to trim the quotes, while maintaining the trailing blanks:
