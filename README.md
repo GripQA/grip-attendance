@@ -20,9 +20,11 @@ registration list and an attendee list, both in CSV format.
 Command Line Usage
 ----------------------
 
-USAGE:  grip-attendance.py reg_list.csv attend_list.csv [config_file.cfg]
-   or:  grip-attendance.py -[Hh][elp]
-   or:  grip-attendance.py -[Gg][en] new_config_file.cfg
+USAGE:
+
+    grip-attendance.py reg_list.csv attend_list.csv [config_file.cfg]
+    grip-attendance.py -[Hh][elp]
+    grip-attendance.py -[Gg][en] new_config_file.cfg
 
 Help Text
 ----------------------
