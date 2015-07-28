@@ -77,10 +77,14 @@ section, but you should really understand how configuration files are
 interpreted before you mess with it.
 
 The most straight forward way to get a new configuration file is to run
-this script with "-Gen new_config_file.cfg" as the arguments. This will
-create a new configuration file with all of the default values filled in
-for each section. Customization is then a simple matter of changing the
-values on the right hand side of the = sign.
+this script as:
+
+    grip-attendance.py -Gen new_config_file.cfg
+
+where "new_config_file.cfg" is the pathname for the generated configuration
+file. This will create a new configuration file with all of the default values
+filled in for each section. Customization is then a simple matter of 
+changing the values on the right hand side of the = sign.
 
 Some things to note about configuration file values - these are all
 driven by the environment's configuration processing capabilities:
@@ -92,10 +96,12 @@ blanks in field names (I don't know why some systems generate field
 names with trailing blanks, but they do). Spaces between words are fine,
 so values with intra-word blank spaces do not require quotes. If you use
 quotes, the quotes get included in the value string. If you absolutely
-have to use quotes, for the trailing blanks, make use of the
-"TRIM_QUOTES = yes" and "QUOTE_CHAR = '" (if you're using single quotes
-'). These allow the program to trim the quotes, while maintaining the
-trailing blanks.
+have to use quotes, for the trailing blanks, make use of the following
+directives in the config file (if you're using single quotes'). These allow
+the program to trim the quotes, while maintaining the trailing blanks.
+
+    TRIM_QUOTES = yes
+    QUOTE_CHAR = '
 
 * Changes made to a section will only apply to processing of that
 section's corresponding data file
@@ -117,21 +123,25 @@ If you have multiple versions of Python on your machine, the above will use
 your default Python version. If your default is not set to Python3, you might
 want to try:
 
-   pip3 install grip-attendance
+    pip3 install grip-attendance
 
 Another alternative is to try:
 
-   python3 -m pip install grip-attendance
+    python3 -m pip install grip-attendance
 
 If you're upgrading:
 
-   python3 -m pip install --upgrade grip-attendance
+    python3 -m pip install --upgrade grip-attendance
 
 This will install the `grip-attendance` executable on your search path,
 except for some MS-Windows installations.
 
-For MS-Windows, I had to manually add ;C:\Python34;C:\Python34\Scripts; (before
-the corresponding entries for Python27) to get pip to work correctly.
+For MS-Windows, I had to manually add:
+
+    ;C:\Python34;C:\Python34\Scripts;
+
+to the PATH environment variable (before the corresponding entries for
+Python27) to get pip to work correctly.
 
 If you don't have pip, you can install the program  manually by cloning
 the code and running the install script:
