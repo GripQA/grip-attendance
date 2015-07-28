@@ -105,9 +105,67 @@ Installation
 
 Grip Attendance currently supports [Python 3.x](https://www.python.org/downloads/).
 
-For the time being, it's best to simply grab the 'grip-attendance.py' file and
-place it in a directory that's on your search path. We're working on a pip
-install.
+We recommend installing with pip, which should be bundled with Python3.
+However, if it's missing, pip can be installed from
+[pip](https://pip.pypa.io/en/latest/).
+
+The most straightforward install, if Python3 is your default environment is:
+
+    pip install grip-attendance
+
+If you have multiple versions of Python on your machine, the above will use
+your default Python version. If your default is not set to Python3, you might
+want to try:
+
+   pip3 install grip-attendance
+
+Another alternative is to try:
+
+   python3 -m pip install grip-attendance
+
+If you're upgrading:
+
+   python3 -m pip install --upgrade grip-attendance
+
+This will install the `grip-attendance` executable on your search path,
+except for some MS-Windows installations.
+
+For MS-Windows, I had to manually add ;C:\Python34;C:\Python34\Scripts; (before
+the corresponding entries for Python27) to get pip to work correctly.
+
+If you don't have pip, you can install the program  manually by cloning
+the code and running the install script:
+
+    git clone git@github.com:GripQA/grip-attendance.git
+    cd grip-attendance
+    python setup.py install
+
+Of course, you can always simply grab the 'grip-attendance.py' file (see
+below for a discussion of downloading single files from GitHub) and
+place it in a directory that's on your search path.
+
+Important Files
+----------------------
+
+Many of the files in the repo are related to infrastructure and supporting
+the pip distribution. The important files are:
+
+* grip-attendance.py - the program file
+* grip_registration.csv - sample event registration list
+* grip_attendees.csv - sample event attendee list
+* grip_sample.cfg - sample configuration file to support the above lists
+* README.md & README.txt - two versions of the README, one for GitHub and one
+for easier reading in a local repo.
+* LICENSE - text of the Apache License used for this project
+
+If you're downloading the program with pip, the repo URL is:
+
+    https://github.com/GripQA/grip-attendance
+
+The above mentioned files can be downloaded as part of a clone, or individual
+files can be downloaded by following the instructions at:
+http://stackoverflow.com/a/13593430/3363628  Note that different browsers and
+operating systems may have different methods for downloading single files.
 
 Support
 ----------------------
