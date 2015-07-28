@@ -5,7 +5,7 @@ import os
 from distutils.core import setup
 import sys
 
-VSTR = "0.04"
+VSTR = "0.5"
 DNLD_URL = "https://github.com/GripQA/grip-attendance/tarball/{0}".format(VSTR)
 
 def read(fname):
