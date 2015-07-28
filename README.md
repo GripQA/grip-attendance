@@ -91,6 +91,9 @@ driven by the environment's configuration processing capabilities:
 
 * Upper/Lower case is important
 
+* Changes made to a section will only apply to processing of that
+section's corresponding data file
+
 * Don't use quotes unless absolutely necessary to support trailing
 blanks in field names (I don't know why some systems generate field
 names with trailing blanks, but they do). Spaces between words are fine,
@@ -98,13 +101,11 @@ so values with intra-word blank spaces do not require quotes. If you use
 quotes, the quotes get included in the value string. If you absolutely
 have to use quotes, for the trailing blanks, make use of the following
 directives in the config file (if you're using single quotes'). These allow
-the program to trim the quotes, while maintaining the trailing blanks.
+the program to trim the quotes, while maintaining the trailing blanks:
 
     TRIM_QUOTES = yes
     QUOTE_CHAR = '
 
-* Changes made to a section will only apply to processing of that
-section's corresponding data file
 
 Installation
 ----------------------
